@@ -1,0 +1,98 @@
+﻿@model Restaurant.Models.OrderDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrderDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preparing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preparing)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Served)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Served)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServedTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServedTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Paid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Paid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaidTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaidTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceGrp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceGrp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Items.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Items.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Orders.OrderID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Orders.OrderID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SSN }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

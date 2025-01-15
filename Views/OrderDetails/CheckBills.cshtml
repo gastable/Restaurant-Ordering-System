@@ -1,0 +1,84 @@
+﻿@using System.Data;
+@model System.Data.DataTable
+
+@{
+    ViewBag.Title = "CheckBills";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h4 class="text-center">Check bill</h4>
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                Table No.
+            </th>
+            <th>
+                Item
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Count
+            </th>
+            <th>
+                Item Sum
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                <td>
+                   @row["Table No."]
+                </td>
+                <td>
+                    @row["Item Name"]
+                </td>
+                <td>
+                    @row["Unit Price"]
+                </td>
+                <td>
+                    @row["# Count"]
+                </td>
+                <td>
+                    @row["Item Sum"]
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+                <strong>
+                    Total
+                </strong>
+            </td>
+            <td>
+            </td>
+            <td>
+                
+            </td>
+            <td>
+            </td>
+            <td>
+                
+            </td>
+            <td>
+               
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                100%
+            </td>
+        </tr>
+    </tfoot>
+
+</table>
+

@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="CatID" />
+    </Key>
+    <Property Name="CatID" Type="Int16" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Items" Relationship="Self.FK__Items__CatID__412EB0B6" FromRole="Categories" ToRole="Items" />
+  </EntityType>
+  <EntityType Name="InvoiceDetails">
+    <Key>
+      <PropertyRef Name="SSN" />
+    </Key>
+    <Property Name="SSN" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvID" Type="String" MaxLength="13" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="OrderID" Type="String" MaxLength="13" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="SubTotal" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Invoices" Relationship="Self.FK__InvoiceDe__InvID__534D60F1" FromRole="InvoiceDetails" ToRole="Invoices" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__InvoiceDe__Order__5441852A" FromRole="InvoiceDetails" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="InvID" />
+    </Key>
+    <Property Name="InvID" Type="String" MaxLength="13" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="InvoiceTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Total" Type="Double" Nullable="false" />
+    <Property Name="Tips" Type="Double" Nullable="false" />
+    <Property Name="PaymentID" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__InvID__534D60F1" FromRole="Invoices" ToRole="InvoiceDetails" />
+    <NavigationProperty Name="PayMethods" Relationship="Self.FK__Invoices__Paymen__5070F446" FromRole="Invoices" ToRole="PayMethods" />
+  </EntityType>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CatID" Type="Int16" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DishCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="SecID" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK__Items__CatID__412EB0B6" FromRole="Items" ToRole="Categories" />
+    <NavigationProperty Name="WorkSections" Relationship="Self.FK__Items__SecID__4222D4EF" FromRole="Items" ToRole="WorkSections" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__ItemI__4D94879B" FromRole="Items" ToRole="OrderDetails" />
+  </EntityType>
+  <EntityType Name="Managers">
+    <Key>
+      <PropertyRef Name="MgrID" />
+    </Key>
+    <Property Name="MgrID" Type="Int16" Nullable="false" />
+    <Property Name="Account" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDetails">
+    <Key>
+      <PropertyRef Name="SSN" />
+    </Key>
+    <Property Name="SSN" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="String" MaxLength="13" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="ItemID" Type="Int16" Nullable="false" />
+    <Property Name="OrderTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Preparing" Type="Boolean" Nullable="false" />
+    <Property Name="PreTime" Type="DateTime" Precision="3" />
+    <Property Name="Served" Type="Boolean" Nullable="false" />
+    <Property Name="ServedTime" Type="DateTime" Precision="3" />
+    <Property Name="Paid" Type="Boolean" Nullable="false" />
+    <Property Name="PaidTime" Type="DateTime" Precision="3" />
+    <Property Name="InvoiceGrp" Type="Byte" Nullable="false" />
+    <NavigationProperty Name="Items" Relationship="Self.FK__OrderDeta__ItemI__4D94879B" FromRole="OrderDetails" ToRole="Items" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__OrderDeta__Order__4CA06362" FromRole="OrderDetails" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="String" MaxLength="13" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="TableTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TbID" Type="Int16" Nullable="false" />
+    <Property Name="AllPaid" Type="Boolean" Nullable="false" />
+    <Property Name="AllPaidTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__Order__5441852A" FromRole="Orders" ToRole="InvoiceDetails" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Order__4CA06362" FromRole="Orders" ToRole="OrderDetails" />
+    <NavigationProperty Name="Tables" Relationship="Self.FK__Orders__TbID__45F365D3" FromRole="Orders" ToRole="Tables" />
+  </EntityType>
+  <EntityType Name="PayMethods">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int16" Nullable="false" />
+    <Property Name="Method" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Invoices" Relationship="Self.FK__Invoices__Paymen__5070F446" FromRole="PayMethods" ToRole="Invoices" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tables">
+    <Key>
+      <PropertyRef Name="TbID" />
+    </Key>
+    <Property Name="TbID" Type="Int16" Nullable="false" />
+    <Property Name="TbCode" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__TbID__45F365D3" FromRole="Tables" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="WorkSections">
+    <Key>
+      <PropertyRef Name="SecID" />
+    </Key>
+    <Property Name="SecID" Type="Int16" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Items" Relationship="Self.FK__Items__SecID__4222D4EF" FromRole="WorkSections" ToRole="Items" />
+  </EntityType>
+  <Association Name="FK__Items__CatID__412EB0B6">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="Items" Type="Self.Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CatID" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="CatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__InvoiceDe__InvID__534D60F1">
+    <End Role="Invoices" Type="Self.Invoices" Multiplicity="1" />
+    <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoices">
+        <PropertyRef Name="InvID" />
+      </Principal>
+      <Dependent Role="InvoiceDetails">
+        <PropertyRef Name="InvID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__InvoiceDe__Order__5441852A">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="InvoiceDetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoices__Paymen__5070F446">
+    <End Role="PayMethods" Type="Self.PayMethods" Multiplicity="1" />
+    <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PayMethods">
+        <PropertyRef Name="PaymentID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="PaymentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Items__SecID__4222D4EF">
+    <End Role="WorkSections" Type="Self.WorkSections" Multiplicity="1" />
+    <End Role="Items" Type="Self.Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkSections">
+        <PropertyRef Name="SecID" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="SecID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__ItemI__4D94879B">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__Order__4CA06362">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__TbID__45F365D3">
+    <End Role="Tables" Type="Self.Tables" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tables">
+        <PropertyRef Name="TbID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="TbID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RestaurantEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Categories" />
+    <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" />
+    <EntitySet Name="Invoices" EntityType="Self.Invoices" />
+    <EntitySet Name="Items" EntityType="Self.Items" />
+    <EntitySet Name="Managers" EntityType="Self.Managers" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="PayMethods" EntityType="Self.PayMethods" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Tables" EntityType="Self.Tables" />
+    <EntitySet Name="WorkSections" EntityType="Self.WorkSections" />
+    <AssociationSet Name="FK__Items__CatID__412EB0B6" Association="Self.FK__Items__CatID__412EB0B6">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InvoiceDe__InvID__534D60F1" Association="Self.FK__InvoiceDe__InvID__534D60F1">
+      <End Role="Invoices" EntitySet="Invoices" />
+      <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InvoiceDe__Order__5441852A" Association="Self.FK__InvoiceDe__Order__5441852A">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoices__Paymen__5070F446" Association="Self.FK__Invoices__Paymen__5070F446">
+      <End Role="PayMethods" EntitySet="PayMethods" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Items__SecID__4222D4EF" Association="Self.FK__Items__SecID__4222D4EF">
+      <End Role="WorkSections" EntitySet="WorkSections" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__ItemI__4D94879B" Association="Self.FK__OrderDeta__ItemI__4D94879B">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__Order__4CA06362" Association="Self.FK__OrderDeta__Order__4CA06362">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__TbID__45F365D3" Association="Self.FK__Orders__TbID__45F365D3">
+      <End Role="Tables" EntitySet="Tables" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
